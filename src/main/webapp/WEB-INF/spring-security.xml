@@ -10,11 +10,22 @@
 		<intercept-url pattern="/admin**" access="ROLE_USER" />
 	</http>
 
+<!--  
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="admin" password="123456" authorities="ROLE_USER" />
 			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+-->
+		<beans:bean id="myUserDetailsService" class="com.cc.web.controller.CpwlUserDetailsService"></beans:bean>
+	<beans:bean id="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	</beans:bean>
+	<authentication-manager>
+		<authentication-provider user-service-ref="myUserDetailsService">
+			<password-encoder ref="bcryptEncoder" /> 
 		</authentication-provider>
 	</authentication-manager>
 
